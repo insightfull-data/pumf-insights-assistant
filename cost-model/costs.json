@@ -1,0 +1,932 @@
+{
+ "Pilot": {
+  "AWS": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Bedrock: Claude Haiku 5.5, Canada cross-Region inference",
+     "basis": "S",
+     "usd": 5.81,
+     "cad": 8.19,
+     "note": "2,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Bedrock: Titan Text Embeddings V2 (queries + re-embeds)",
+     "basis": "L",
+     "usd": 0.08,
+     "cad": 0.11,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda: orchestration + tabulation",
+     "basis": "L",
+     "usd": 0.58,
+     "cad": 0.81,
+     "note": "34,400 GB-s"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda provisioned concurrency (1 x 6 GB)",
+     "basis": "L",
+     "usd": 65.7,
+     "cad": 92.64,
+     "note": "Avoids cold starts on tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Step Functions Express (runtime) + Standard (ingest)",
+     "basis": "L",
+     "usd": 0.12,
+     "cad": 0.17,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Glue jobs + Data Quality (ingest, amortized)",
+     "basis": "L",
+     "usd": 3.87,
+     "cad": 5.46,
+     "note": "~8 DPU-hours/month"
+    },
+    {
+     "layer": "Data",
+     "service": "Aurora PostgreSQL Serverless v2 + pgvector",
+     "basis": "S",
+     "usd": 108.46,
+     "cad": 152.93,
+     "note": "1.0 avg ACU; $0.12/ACU-h us-east-1 x1.10"
+    },
+    {
+     "layer": "Data",
+     "service": "S3: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 0.52,
+     "cad": 0.74,
+     "note": "20 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "DynamoDB on-demand: result cache",
+     "basis": "L",
+     "usd": 0.25,
+     "cad": 0.35,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "Athena: analyst SQL + answer-log queries",
+     "basis": "L",
+     "usd": 1.1,
+     "cad": 1.55,
+     "note": "TB scanned"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "CloudFront + API Gateway HTTP API",
+     "basis": "L",
+     "usd": 0.01,
+     "cad": 0.02,
+     "note": "CloudFront within free 1 TB"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "AWS WAF (1 web ACL, 5 rules)",
+     "basis": "L",
+     "usd": 10.01,
+     "cad": 14.11,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cognito user pool",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "25 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "VPC interface endpoints (7 x 2 AZ)",
+     "basis": "L",
+     "usd": 112.47,
+     "cad": 158.58,
+     "note": "Bedrock, Glue, KMS, STS, Secrets, Logs, SFN"
+    },
+    {
+     "layer": "Network & security",
+     "service": "KMS (5 keys) + Secrets Manager (6)",
+     "basis": "L",
+     "usd": 7.52,
+     "cad": 10.6,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "GuardDuty, Security Hub, Config, CloudTrail",
+     "basis": "A",
+     "usd": 40,
+     "cad": 56.4,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "CloudWatch logs, metrics, alarms; X-Ray",
+     "basis": "L",
+     "usd": 11.75,
+     "cad": 16.57,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test accounts (30% of non-AI prod)",
+     "basis": "A",
+     "usd": 108.71,
+     "cad": 153.28,
+     "note": "Aurora auto-pause, no provisioned concurrency"
+    }
+   ],
+   "usd": 476.96,
+   "cad": 672.51,
+   "per_q_cad": 0.6725
+  },
+  "GCP": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Vertex AI: Gemini 3.5 Flash, Montreal regional endpoint",
+     "basis": "S",
+     "usd": 85.47,
+     "cad": 120.51,
+     "note": "2,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Vertex AI: text embeddings (queries + re-embeds)",
+     "basis": "A",
+     "usd": 0.54,
+     "cad": 0.76,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run services: orchestration + tabulation",
+     "basis": "L",
+     "usd": 1.32,
+     "cad": 1.86,
+     "note": "Tier 2 pricing"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run min instances (1 x 2 vCPU/8 GiB, idle)",
+     "basis": "L",
+     "usd": 91.98,
+     "cad": 129.69,
+     "note": "Warm tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Workflows (runtime + ingest)",
+     "basis": "L",
+     "usd": 0.65,
+     "cad": 0.92,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run jobs + Dataplex data quality (ingest)",
+     "basis": "L",
+     "usd": 6.12,
+     "cad": 8.63,
+     "note": "Amortized"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud SQL PostgreSQL + pgvector (1 vCPU/3.75 GiB)",
+     "basis": "S",
+     "usd": 57.98,
+     "cad": 81.76,
+     "note": "Enterprise edition"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud Storage: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 0.49,
+     "cad": 0.69,
+     "note": "20 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "Firestore: result cache",
+     "basis": "L",
+     "usd": 0.01,
+     "cad": 0.01,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "BigQuery: analyst SQL + answer log",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "First 1 TB/month free"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "External HTTPS load balancer",
+     "basis": "L",
+     "usd": 20.08,
+     "cad": 28.31,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cloud Armor (1 policy, 5 rules)",
+     "basis": "L",
+     "usd": 10.01,
+     "cad": 14.11,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Identity Platform / IAP",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "25 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Direct VPC egress + Private Google Access",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "No connector or endpoint fee"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Cloud KMS (5 keys) + Secret Manager (6)",
+     "basis": "L",
+     "usd": 0.78,
+     "cad": 1.1,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "Security Command Center, audit logs, Org Policy",
+     "basis": "A",
+     "usd": 15,
+     "cad": 21.15,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "Cloud Logging, Monitoring, Trace",
+     "basis": "L",
+     "usd": 10.0,
+     "cad": 14.1,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test projects (30% of non-AI prod)",
+     "basis": "A",
+     "usd": 64.33,
+     "cad": 90.7,
+     "note": "Smaller Cloud SQL, no min instances"
+    }
+   ],
+   "usd": 364.75,
+   "cad": 514.3,
+   "per_q_cad": 0.5143
+  },
+  "sensitivity": {
+   "aws_sonnet_global_for_planner_narrator": 84.41,
+   "aws_haiku_canada": 8.19,
+   "gcp_gemini35_montreal": 120.51,
+   "gcp_gemini38_global_2027": 111.67
+  }
+ },
+ "Production": {
+  "AWS": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Bedrock: Claude Haiku 5.5, Canada cross-Region inference",
+     "basis": "S",
+     "usd": 60.98,
+     "cad": 85.99,
+     "note": "21,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Bedrock: Titan Text Embeddings V2 (queries + re-embeds)",
+     "basis": "L",
+     "usd": 0.2,
+     "cad": 0.29,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda: orchestration + tabulation",
+     "basis": "L",
+     "usd": 5.43,
+     "cad": 7.66,
+     "note": "323,400 GB-s"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda provisioned concurrency (2 x 6 GB)",
+     "basis": "L",
+     "usd": 131.4,
+     "cad": 185.28,
+     "note": "Avoids cold starts on tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Step Functions Express (runtime) + Standard (ingest)",
+     "basis": "L",
+     "usd": 0.54,
+     "cad": 0.77,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Glue jobs + Data Quality (ingest, amortized)",
+     "basis": "L",
+     "usd": 3.87,
+     "cad": 5.46,
+     "note": "~8 DPU-hours/month"
+    },
+    {
+     "layer": "Data",
+     "service": "Aurora PostgreSQL Serverless v2 + pgvector",
+     "basis": "S",
+     "usd": 301.18,
+     "cad": 424.66,
+     "note": "3.0 avg ACU; $0.12/ACU-h us-east-1 x1.10"
+    },
+    {
+     "layer": "Data",
+     "service": "S3: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 1.5,
+     "cad": 2.12,
+     "note": "50 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "DynamoDB on-demand: result cache",
+     "basis": "L",
+     "usd": 0.27,
+     "cad": 0.37,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "Athena: analyst SQL + answer-log queries",
+     "basis": "L",
+     "usd": 5.78,
+     "cad": 8.14,
+     "note": "TB scanned"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "CloudFront + API Gateway HTTP API",
+     "basis": "L",
+     "usd": 0.12,
+     "cad": 0.16,
+     "note": "CloudFront within free 1 TB"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "AWS WAF (1 web ACL, 5 rules)",
+     "basis": "L",
+     "usd": 10.08,
+     "cad": 14.21,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cognito user pool",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "200 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "VPC interface endpoints (7 x 2 AZ)",
+     "basis": "L",
+     "usd": 112.47,
+     "cad": 158.58,
+     "note": "Bedrock, Glue, KMS, STS, Secrets, Logs, SFN"
+    },
+    {
+     "layer": "Network & security",
+     "service": "KMS (5 keys) + Secrets Manager (6)",
+     "basis": "L",
+     "usd": 8.66,
+     "cad": 12.21,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "GuardDuty, Security Hub, Config, CloudTrail",
+     "basis": "A",
+     "usd": 90,
+     "cad": 126.9,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "CloudWatch logs, metrics, alarms; X-Ray",
+     "basis": "L",
+     "usd": 16.55,
+     "cad": 23.34,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test accounts (25% of non-AI prod)",
+     "basis": "A",
+     "usd": 171.96,
+     "cad": 242.46,
+     "note": "Aurora auto-pause, no provisioned concurrency"
+    }
+   ],
+   "usd": 920.99,
+   "cad": 1298.6,
+   "per_q_cad": 0.0649
+  },
+  "GCP": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Vertex AI: Gemini 3.5 Flash, Montreal regional endpoint",
+     "basis": "S",
+     "usd": 897.44,
+     "cad": 1265.38,
+     "note": "21,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Vertex AI: text embeddings (queries + re-embeds)",
+     "basis": "A",
+     "usd": 1.4,
+     "cad": 1.97,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run services: orchestration + tabulation",
+     "basis": "L",
+     "usd": 13.28,
+     "cad": 18.72,
+     "note": "Tier 2 pricing"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run min instances (2 x 2 vCPU/8 GiB, idle)",
+     "basis": "L",
+     "usd": 183.96,
+     "cad": 259.38,
+     "note": "Warm tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Workflows (runtime + ingest)",
+     "basis": "L",
+     "usd": 7.3,
+     "cad": 10.29,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run jobs + Dataplex data quality (ingest)",
+     "basis": "L",
+     "usd": 6.12,
+     "cad": 8.63,
+     "note": "Amortized"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud SQL PostgreSQL + pgvector (2 vCPU/8 GiB, HA)",
+     "basis": "S",
+     "usd": 230.07,
+     "cad": 324.4,
+     "note": "Enterprise edition"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud Storage: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 1.46,
+     "cad": 2.07,
+     "note": "50 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "Firestore: result cache",
+     "basis": "L",
+     "usd": 0.06,
+     "cad": 0.08,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "BigQuery: analyst SQL + answer log",
+     "basis": "L",
+     "usd": 0.31,
+     "cad": 0.44,
+     "note": "First 1 TB/month free"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "External HTTPS load balancer",
+     "basis": "L",
+     "usd": 20.11,
+     "cad": 28.35,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cloud Armor (1 policy, 5 rules)",
+     "basis": "L",
+     "usd": 10.09,
+     "cad": 14.23,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Identity Platform / IAP",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "200 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Direct VPC egress + Private Google Access",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "No connector or endpoint fee"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Cloud KMS (5 keys) + Secret Manager (6)",
+     "basis": "L",
+     "usd": 1.92,
+     "cad": 2.71,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "Security Command Center, audit logs, Org Policy",
+     "basis": "A",
+     "usd": 40,
+     "cad": 56.4,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "Cloud Logging, Monitoring, Trace",
+     "basis": "L",
+     "usd": 10.0,
+     "cad": 14.1,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test projects (25% of non-AI prod)",
+     "basis": "A",
+     "usd": 131.17,
+     "cad": 184.95,
+     "note": "Smaller Cloud SQL, no min instances"
+    }
+   ],
+   "usd": 1554.69,
+   "cad": 2192.11,
+   "per_q_cad": 0.1096
+  },
+  "sensitivity": {
+   "aws_sonnet_global_for_planner_narrator": 886.26,
+   "aws_haiku_canada": 85.99,
+   "gcp_gemini35_montreal": 1265.38,
+   "gcp_gemini38_global_2027": 1172.56
+  }
+ },
+ "Scale": {
+  "AWS": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Bedrock: Claude Haiku 5.5, Canada cross-Region inference",
+     "basis": "S",
+     "usd": 583.7,
+     "cad": 823.02,
+     "note": "201,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Bedrock: Titan Text Embeddings V2 (queries + re-embeds)",
+     "basis": "L",
+     "usd": 1.39,
+     "cad": 1.96,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda: orchestration + tabulation",
+     "basis": "L",
+     "usd": 47.97,
+     "cad": 67.64,
+     "note": "2,854,200 GB-s"
+    },
+    {
+     "layer": "Compute",
+     "service": "Lambda provisioned concurrency (5 x 6 GB)",
+     "basis": "L",
+     "usd": 328.5,
+     "cad": 463.19,
+     "note": "Avoids cold starts on tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Step Functions Express (runtime) + Standard (ingest)",
+     "basis": "L",
+     "usd": 4.56,
+     "cad": 6.44,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Glue jobs + Data Quality (ingest, amortized)",
+     "basis": "L",
+     "usd": 3.87,
+     "cad": 5.46,
+     "note": "~8 DPU-hours/month"
+    },
+    {
+     "layer": "Data",
+     "service": "Aurora PostgreSQL Serverless v2 + pgvector",
+     "basis": "S",
+     "usd": 782.98,
+     "cad": 1104.0,
+     "note": "8.0 avg ACU; $0.12/ACU-h us-east-1 x1.10"
+    },
+    {
+     "layer": "Data",
+     "service": "S3: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 6.16,
+     "cad": 8.69,
+     "note": "150 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "DynamoDB on-demand: result cache",
+     "basis": "L",
+     "usd": 0.39,
+     "cad": 0.55,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "Athena: analyst SQL + answer-log queries",
+     "basis": "L",
+     "usd": 55.28,
+     "cad": 77.94,
+     "note": "TB scanned"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "CloudFront + API Gateway HTTP API",
+     "basis": "L",
+     "usd": 1.11,
+     "cad": 1.56,
+     "note": "CloudFront within free 1 TB"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "AWS WAF (1 web ACL, 5 rules)",
+     "basis": "L",
+     "usd": 10.72,
+     "cad": 15.12,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cognito user pool",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "2000 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "VPC interface endpoints (7 x 2 AZ)",
+     "basis": "L",
+     "usd": 112.47,
+     "cad": 158.58,
+     "note": "Bedrock, Glue, KMS, STS, Secrets, Logs, SFN"
+    },
+    {
+     "layer": "Network & security",
+     "service": "KMS (5 keys) + Secrets Manager (6)",
+     "basis": "L",
+     "usd": 19.46,
+     "cad": 27.44,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "GuardDuty, Security Hub, Config, CloudTrail",
+     "basis": "A",
+     "usd": 250,
+     "cad": 352.5,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "CloudWatch logs, metrics, alarms; X-Ray",
+     "basis": "L",
+     "usd": 53.05,
+     "cad": 74.8,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test accounts (15% of non-AI prod)",
+     "basis": "A",
+     "usd": 251.48,
+     "cad": 354.59,
+     "note": "Aurora auto-pause, no provisioned concurrency"
+    }
+   ],
+   "usd": 2513.1,
+   "cad": 3543.47,
+   "per_q_cad": 0.0177
+  },
+  "GCP": {
+   "lines": [
+    {
+     "layer": "AI",
+     "service": "Vertex AI: Gemini 3.5 Flash, Montreal regional endpoint",
+     "basis": "S",
+     "usd": 8589.74,
+     "cad": 12111.53,
+     "note": "201,000 questions x ~16k tokens"
+    },
+    {
+     "layer": "AI",
+     "service": "Vertex AI: text embeddings (queries + re-embeds)",
+     "basis": "A",
+     "usd": 9.49,
+     "cad": 13.39,
+     "note": "Small"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run services: orchestration + tabulation",
+     "basis": "L",
+     "usd": 123.24,
+     "cad": 173.77,
+     "note": "Tier 2 pricing"
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run min instances (5 x 2 vCPU/8 GiB, idle)",
+     "basis": "L",
+     "usd": 459.9,
+     "cad": 648.46,
+     "note": "Warm tabulation"
+    },
+    {
+     "layer": "Compute",
+     "service": "Workflows (runtime + ingest)",
+     "basis": "L",
+     "usd": 70.3,
+     "cad": 99.12,
+     "note": ""
+    },
+    {
+     "layer": "Compute",
+     "service": "Cloud Run jobs + Dataplex data quality (ingest)",
+     "basis": "L",
+     "usd": 6.12,
+     "cad": 8.63,
+     "note": "Amortized"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud SQL PostgreSQL + pgvector (4 vCPU/16 GiB, HA)",
+     "basis": "S",
+     "usd": 675.25,
+     "cad": 952.11,
+     "note": "Enterprise edition"
+    },
+    {
+     "layer": "Data",
+     "service": "Cloud Storage: landing, raw, curated, analytic, exports",
+     "basis": "L",
+     "usd": 6.46,
+     "cad": 9.12,
+     "note": "150 GB"
+    },
+    {
+     "layer": "Data",
+     "service": "Firestore: result cache",
+     "basis": "L",
+     "usd": 0.5,
+     "cad": 0.71,
+     "note": ""
+    },
+    {
+     "layer": "Data",
+     "service": "BigQuery: analyst SQL + answer log",
+     "basis": "L",
+     "usd": 56.56,
+     "cad": 79.75,
+     "note": "First 1 TB/month free"
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "External HTTPS load balancer",
+     "basis": "L",
+     "usd": 20.4,
+     "cad": 28.76,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Cloud Armor (1 policy, 5 rules)",
+     "basis": "L",
+     "usd": 10.9,
+     "cad": 15.38,
+     "note": ""
+    },
+    {
+     "layer": "Edge & identity",
+     "service": "Identity Platform / IAP",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "2000 MAU, within free tier"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Direct VPC egress + Private Google Access",
+     "basis": "L",
+     "usd": 0.0,
+     "cad": 0.0,
+     "note": "No connector or endpoint fee"
+    },
+    {
+     "layer": "Network & security",
+     "service": "Cloud KMS (5 keys) + Secret Manager (6)",
+     "basis": "L",
+     "usd": 12.72,
+     "cad": 17.94,
+     "note": ""
+    },
+    {
+     "layer": "Network & security",
+     "service": "Security Command Center, audit logs, Org Policy",
+     "basis": "A",
+     "usd": 150,
+     "cad": 211.5,
+     "note": "Allowance"
+    },
+    {
+     "layer": "Operations",
+     "service": "Cloud Logging, Monitoring, Trace",
+     "basis": "L",
+     "usd": 15.0,
+     "cad": 21.15,
+     "note": ""
+    },
+    {
+     "layer": "Environments",
+     "service": "Dev + test projects (15% of non-AI prod)",
+     "basis": "A",
+     "usd": 241.11,
+     "cad": 339.96,
+     "note": "Smaller Cloud SQL, no min instances"
+    }
+   ],
+   "usd": 10447.7,
+   "cad": 14731.26,
+   "per_q_cad": 0.0737
+  },
+  "sensitivity": {
+   "aws_sonnet_global_for_planner_narrator": 8482.74,
+   "aws_haiku_canada": 823.02,
+   "gcp_gemini35_montreal": 12111.53,
+   "gcp_gemini38_global_2027": 11223.04
+  }
+ }
+}

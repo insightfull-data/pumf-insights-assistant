@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+cost-model/cost_chart.png
+.venv/
+.DS_Store

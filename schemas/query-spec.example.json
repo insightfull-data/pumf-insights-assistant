@@ -1,0 +1,17 @@
+{
+  "spec_version": "1.0",
+  "survey": "cius",
+  "release_id": "cius_2022",
+  "base": {
+    "all": [
+      { "var": "h_age_band", "in": ["25-34", "35-44"] },
+      { "var": "h_province", "eq": "ON" }
+    ]
+  },
+  "universe": { "var": "internet_user_12m", "eq": 1 },
+  "rows": [{ "var": "act_video_streaming" }, { "var": "act_podcasts" }],
+  "columns": [{ "var": "h_income_quintile" }],
+  "weight": "final_weight",
+  "measures": ["weighted_count", "col_pct", "index", "unweighted_n", "cv"],
+  "missing": "exclude"
+}
