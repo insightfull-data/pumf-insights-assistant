@@ -21,6 +21,10 @@ flowchart LR
 4. **Releases are immutable.** Every answer records the PUMF release, pipeline version, model and prompt versions.
 5. **Reliability before readability.** CV and minimum-count rules from each release's user guide run before the narrator.
 
+## AI governance
+
+The [governance model](docs/ai-governance.md) maps every control to four frameworks. The Ontario Responsible Use of AI Directive is binding if an Ontario ministry or agency deploys the assistant; NIST AI RMF and ISO/IEC 42001 are voluntary; the federal Directive on Automated Decision-Making does not apply legally (no decisions about individuals) and is used as a benchmark.
+
 ## Data sources
 
 - [Canadian Internet Use Survey PUMF](https://www150.statcan.gc.ca/n1/pub/56m0003x/56m0003x2020001-eng.htm) (2022, 2020, 2018): digital and media behaviour.
@@ -47,6 +51,8 @@ Includes dev and test environments. The gap is the model: keeping inference in C
 | [docs/gcp-architecture.md](docs/gcp-architecture.md) | Google Cloud reference architecture diagram and notes |
 | [docs/service-mapping.md](docs/service-mapping.md) | Component-by-component AWS ↔ Google Cloud mapping and LLM residency notes |
 | [docs/cost-estimate.md](docs/cost-estimate.md) | Cost tables for three tiers, generated from the model |
+| [docs/ai-governance.md](docs/ai-governance.md) | AI governance model: roles and RACI, life-cycle gates, human oversight, monitoring, change control, incidents, and a crosswalk to NIST AI RMF, ISO/IEC 42001, Ontario's Responsible Use of AI Directive and the federal DADM |
+| [governance/](governance/) | Risk register (Markdown and CSV), system card, algorithmic impact self-assessment |
 | [schemas/query-spec.schema.json](schemas/query-spec.schema.json) | JSON Schema for the LLM-to-engine contract, with an [example](schemas/query-spec.example.json) |
 | [sql/catalog.sql](sql/catalog.sql) | PostgreSQL + pgvector DDL for the variable catalog, including hybrid search |
 | [cost-model/](cost-model/) | Python cost model, Markdown generator and PDF builder |

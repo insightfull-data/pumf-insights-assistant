@@ -1,0 +1,26 @@
+# AI risk register
+
+Inherent rating is before controls; residual is after. Risk categories follow the twelve generative AI risks in NIST AI 600-1. Source of truth is [risk-register.csv](risk-register.csv); this page is generated from it.
+
+Rating rule: inherent is High when one of likelihood or impact is High and the other is at least Medium; Medium when both are Medium, or one is High and the other Low; otherwise Low. Owners review this register at every Standard or Major change and at least quarterly.
+
+| ID | Risk | NIST GenAI category | Inherent | Controls | Residual | Owner | Key risk indicator |
+| --- | --- | --- | :-: | --- | :-: | --- | --- |
+| R01 | Narrative states a figure that is not in the result table | Confabulation | High | Numbers come only from the engine; number checker blocks mismatches; narrator receives the table only | Low | AI system owner | Number-checker failures reaching users (target 0) |
+| R02 | Resolver maps a concept to the wrong variable (for example the wrong frequency threshold) | Confabulation | High | Hybrid retrieval with exact-code priority; clarify question when confidence is low; spec and variable labels shown to user; golden set | Medium | Data steward | Golden-set variable recall; user flags |
+| R03 | Small-sample estimates are over-interpreted | Information integrity | High | Reliability guard suppresses or flags by CV and minimum n; caution acknowledgement before export; narrator must state flags | Low | Data steward | Narratives missing required caution flags (target 0) |
+| R04 | Small population groups are suppressed more often, making them less visible in planning | Harmful bias and homogenization | Medium | Monthly suppression-rate review by subgroup; narrator suggests broader bases instead of silence; equity review | Low | Equity reviewer | Subgroup suppression rates |
+| R05 | Model-based sizing is mistaken for an official StatCan estimate | Information integrity | High | Separate estimate_type in spec; mandatory labelling; never mixed with direct estimates in one table | Low | Data steward | Spot checks of exported tables |
+| R06 | Users accept answers without checking (automation bias) | Human-AI configuration | High | Answers labelled as drafts; explanation panel; training; review required before external publication | Medium | AI system owner | Share of exports with acknowledged flags; user-flag rate |
+| R07 | Prompt injection through question text or machine-drafted catalog descriptions alters behaviour | Information security | Medium | Spec validated against JSON Schema and catalog; LLM roles cannot read data or call tools beyond their step; drafted text reviewed before display | Low | Platform engineering | Schema validation failures; red-team results |
+| R08 | Inference leaves Canada after a provider or configuration change | Data privacy | Medium | Canada-only inference profile or regional endpoint pinned in code; daily residency test; SCPs and org policies | Low | Privacy and security | Requests outside Canada (target 0) |
+| R09 | Re-identification through combinations of narrow cells | Data privacy | Low | PUMFs anonymized by StatCan; minimum unweighted n; no microdata to LLMs; analyst SQL governed by grants | Low | Privacy and security | Cells released below minimum n (target 0) |
+| R10 | Provider retires or silently changes a model, degrading quality | Value chain and component integration | Medium | Pinned model versions; deprecation tracking; golden-set regression on any change; Major change class for model swaps | Low | Platform engineering | Vendor notices; golden-set scores |
+| R11 | PUMF licence terms breached (for example redistributing microdata) | Intellectual property | Low | Licence recorded per release; only aggregates leave the platform; exports contain tables, not records | Low | Data steward | Licence review at each release |
+| R12 | Trend answers compare questions that changed between survey cycles | Information integrity | Medium | Concept table with comparability notes; narrator must state comparability caveats; steward approves concept links | Low | Data steward | Golden trend questions |
+| R13 | Credentials or roles allow an LLM-calling component to read microdata | Information security | Medium | Role separation in IAM; LLM roles denied S3 data zones; access reviews; infrastructure as code | Low | Platform engineering | Quarterly access review findings |
+| R14 | Cost overruns from token growth or misconfigured capacity | Value chain and component integration | Low | Per-question cost metric; budgets and alerts; caching; model routing | Low | AI system owner | Cost per answered question |
+| R15 | Answers cannot be reproduced for audit or challenge | Information integrity | Low | Immutable releases; answer log with spec, versions and result hash | Low | AI system owner | Reproduction test on sample of past answers |
+| R16 | Energy use of LLM calls not considered | Environmental impacts | Low | Small models by default; caching; deterministic engine does the heavy work | Low | AI system owner | Tokens per answered question |
+
+16 risks; 2 remain Medium after controls (R02, R06) and drive the evaluation and oversight requirements in [ai-governance.md](../docs/ai-governance.md).

@@ -200,6 +200,8 @@ flowchart TB
 
 ## 9. Governance, security and quality
 
+The full AI governance model, risk register and system card are in [ai-governance.md](ai-governance.md).
+
 No role that calls an LLM can read microdata; only aggregated, reliability-checked tables reach Bedrock.
 
 | Role | Can read | Can write | Cannot |
