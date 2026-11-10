@@ -2,7 +2,7 @@
 
 A reference architecture for an AI assistant that answers plain-language questions about Canadians from Statistics Canada public use microdata files (PUMFs), with designs and cost estimates for **AWS** and **Google Cloud** in Canadian regions.
 
-It follows the pattern Aided AI Assistant: an LLM translates the question into a validated query spec, and a deterministic engine computes every number.
+It follows the Aided AI Assistant pattern: an LLM translates the question into a validated query spec, and a deterministic engine computes every number.
 
 ```mermaid
 flowchart LR
