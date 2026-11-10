@@ -55,10 +55,11 @@ Includes dev and test environments. The gap is the model: keeping inference in C
 | [governance/](governance/) | Risk register (Markdown and CSV), system card, algorithmic impact self-assessment |
 | [schemas/query-spec.schema.json](schemas/query-spec.schema.json) | JSON Schema for the LLM-to-engine contract, with an [example](schemas/query-spec.example.json) |
 | [sql/catalog.sql](sql/catalog.sql) | PostgreSQL + pgvector DDL for the variable catalog, including hybrid search |
+| [reference-implementation/](reference-implementation/) | Runnable Python implementation: synthetic CIUS-style release, SPSS parser, DuckDB engine, four Claude steps, number checker, FastAPI service, golden set, 31 tests |
 | [cost-model/](cost-model/) | Python cost model, Markdown generator and PDF builder |
 | [pdf/](pdf/) | Generated PDF: architectures and cost estimate |
 
-Variable codes in examples (such as `act_podcasts`) are illustrative placeholders, not real StatCan codes.
+Variable codes in examples (such as `ac_pod`) come from the synthetic release, not from a real StatCan PUMF.
 
 ## Rebuilding the cost outputs
 
@@ -72,9 +73,17 @@ python build_pdf.py       # writes ../pdf/PUMF_Assistant_AWS_GCP_Architecture_Co
 
 Edit the tier assumptions, token counts and unit prices at the top of `cost_model.py`. Each line carries a basis flag: `S` confirmed from a November 2026 source, `L` published US list price scaled by a regional factor, `A` planning allowance.
 
-## Status
+## Try it
 
-Design and cost model only; no deployable infrastructure code yet. The catalog DDL has been tested on PostgreSQL 16 with the vector column stubbed; run it against a pgvector-enabled instance before use.
+```bash
+cd reference-implementation
+pip install -e ".[dev]"
+pumfai setup && pytest
+export ANTHROPIC_API_KEY=sk-ant-...
+pumfai ask "What share of Ontarians aged 25 to 44 listen to podcasts?"
+```
+
+The [reference implementation](reference-implementation/) runs end to end on a synthetic CIUS-style release (invented data, no licence restrictions). Infrastructure as code for AWS or Google Cloud is not included yet. The catalog DDL has been tested on PostgreSQL 16 with the vector column stubbed; run it against a pgvector-enabled instance before use.
 
 ## Licence
 

@@ -1,0 +1,18 @@
+{
+ "release_id": "cius_synth_2022",
+ "survey": "cius",
+ "ref_period": "2022",
+ "title": "Synthetic Internet Use Survey 2022 (CIUS-style, invented data)",
+ "record_count": 6000,
+ "weight_variable": "WTPP",
+ "weight_total": 32330000.0,
+ "bootstrap_prefix": "WTBS_",
+ "n_bootstrap": 50,
+ "reliability": {
+  "caution_cv_pct": 16.6,
+  "suppress_cv_pct": 33.3,
+  "min_unweighted_n": 30
+ },
+ "population": "Persons aged 15 and over in the ten provinces (synthetic)",
+ "licence": "Synthetic data generated for this repository; MIT licence. Not Statistics Canada data."
+}

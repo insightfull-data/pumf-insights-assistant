@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/insightfull-data/pumf-insights-assistant/schemas/query-spec.schema.json",
+  "title": "PUMF query spec",
+  "description": "The only object that crosses from the AI layer to the tabulation engine. The planner LLM emits it; the engine validates it against this schema and the variable catalog before computing anything.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["spec_version", "survey", "release_id", "base", "rows", "weight", "measures"],
+  "properties": {
+    "spec_version": { "const": "1.0" },
+    "survey": { "type": "string", "enum": ["cius", "census_individuals", "census_hierarchical"] },
+    "release_id": {
+      "type": "string",
+      "pattern": "^[a-z_]+_[0-9]{4}$",
+      "description": "Must name a release with status 'published' in the catalog."
+    },
+    "base": { "$ref": "#/$defs/filter", "description": "Target population; the universe is ANDed in automatically." },
+    "universe": {
+      "$ref": "#/$defs/filter",
+      "description": "Copied from the variables' universe_expr by the planner; the engine rechecks it."
+    },
+    "rows": { "$ref": "#/$defs/axis", "minItems": 1, "maxItems": 4 },
+    "columns": { "$ref": "#/$defs/axis", "maxItems": 2 },
+    "weight": { "$ref": "#/$defs/varCode", "description": "Final weight variable for this release." },
+    "measures": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["weighted_count", "col_pct", "row_pct", "index", "unweighted_n", "cv", "se"]
+      }
+    },
+    "missing": {
+      "enum": ["exclude", "show"],
+      "default": "exclude",
+      "description": "Valid skip, don't know, refusal and not stated codes are excluded from denominators unless 'show'."
+    },
+    "estimate_type": {
+      "enum": ["direct", "model_based_sizing"],
+      "default": "direct",
+      "description": "model_based_sizing applies CIUS rates to Census counts by harmonized cell and is never mixed with direct estimates."
+    }
+  },
+  "$defs": {
+    "varCode": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$",
+      "description": "Lower-cased StatCan variable code, or an h_ harmonized column, or an approved derived variable."
+    },
+    "value": { "type": ["string", "integer", "number"] },
+    "axis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["var"],
+        "properties": {
+          "var": { "$ref": "#/$defs/varCode" },
+          "values": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/value" },
+            "description": "Optional subset of codes to show; default is all non-missing codes."
+          }
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["var"],
+      "properties": {
+        "var": { "$ref": "#/$defs/varCode" },
+        "eq": { "$ref": "#/$defs/value" },
+        "in": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/value" } },
+        "between": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number" } }
+      },
+      "oneOf": [
+        { "required": ["eq"] },
+        { "required": ["in"] },
+        { "required": ["between"] }
+      ]
+    },
+    "filter": {
+      "oneOf": [
+        { "$ref": "#/$defs/condition" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["all"],
+          "properties": { "all": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/filter" } } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["any"],
+          "properties": { "any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/filter" } } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["not"],
+          "properties": { "not": { "$ref": "#/$defs/filter" } }
+        }
+      ]
+    }
+  }
+}

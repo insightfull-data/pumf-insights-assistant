@@ -1,0 +1,323 @@
+{
+ "variables": {
+  "province": {
+   "topic": "geography",
+   "synonyms": [
+    "province",
+    "region"
+   ],
+   "measure_type": "categorical"
+  },
+  "age_grp": {
+   "topic": "demographics",
+   "synonyms": [
+    "age",
+    "age group"
+   ]
+  },
+  "gender": {
+   "topic": "demographics",
+   "synonyms": [
+    "gender",
+    "men",
+    "women",
+    "sex"
+   ]
+  },
+  "hhincq": {
+   "topic": "demographics.income",
+   "synonyms": [
+    "income",
+    "household income",
+    "affluent",
+    "low income"
+   ]
+  },
+  "edu": {
+   "topic": "demographics.education",
+   "synonyms": [
+    "education",
+    "degree",
+    "university",
+    "college"
+   ]
+  },
+  "ui_010": {
+   "topic": "internet_use",
+   "question_text": "In the past 12 months, have you used the Internet?",
+   "synonyms": [
+    "internet users",
+    "online",
+    "uses the internet"
+   ],
+   "description": "Whether the person used the Internet at all in the past 12 months."
+  },
+  "fq_010": {
+   "topic": "internet_use",
+   "question_text": "How often did you use the Internet?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "daily internet use",
+    "heavy internet users",
+    "frequency"
+   ],
+   "description": "How often Internet users go online."
+  },
+  "ac_strm": {
+   "topic": "online_activities.past_3_months",
+   "question_text": "In the past 3 months, did you watch video content through a streaming service?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "streaming",
+    "Netflix",
+    "video streaming",
+    "streamers",
+    "watch TV online",
+    "SVOD"
+   ],
+   "description": "Watched streamed video such as subscription video services."
+  },
+  "ac_pod": {
+   "topic": "online_activities.past_3_months",
+   "question_text": "In the past 3 months, did you listen to podcasts?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "podcasts",
+    "podcast listeners",
+    "audio shows"
+   ],
+   "description": "Listened to podcasts on any device."
+  },
+  "ac_mus": {
+   "topic": "online_activities.past_3_months",
+   "question_text": "In the past 3 months, did you listen to music through a streaming service?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "music streaming",
+    "Spotify",
+    "streaming audio"
+   ],
+   "description": "Streamed music."
+  },
+  "ac_news": {
+   "topic": "online_activities.past_3_months",
+   "question_text": "In the past 3 months, did you read or watch news online?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "online news",
+    "news readers",
+    "digital news"
+   ],
+   "description": "Consumed news online."
+  },
+  "ac_shop": {
+   "topic": "e_commerce",
+   "question_text": "In the past 12 months, did you order goods or services over the Internet?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "online shopping",
+    "e-commerce",
+    "online shoppers",
+    "bought online"
+   ],
+   "description": "Made any online purchase."
+  },
+  "ec_spnd": {
+   "topic": "e_commerce",
+   "question_text": "In total, how much did you spend on goods and services ordered online?",
+   "universe_expr": {
+    "all": [
+     {
+      "var": "ui_010",
+      "eq": 1
+     },
+     {
+      "var": "ac_shop",
+      "eq": 1
+     }
+    ]
+   },
+   "universe_text": "Internet users who ordered online",
+   "synonyms": [
+    "online spending",
+    "spend",
+    "big spenders"
+   ],
+   "description": "Total annual online spending band."
+  },
+  "sm_use": {
+   "topic": "online_activities.past_3_months",
+   "question_text": "In the past 3 months, did you use social networking sites or apps?",
+   "universe_expr": {
+    "var": "ui_010",
+    "eq": 1
+   },
+   "universe_text": "Internet users in the past 12 months",
+   "synonyms": [
+    "social media",
+    "Facebook",
+    "Instagram",
+    "TikTok",
+    "social networks"
+   ],
+   "description": "Used social media."
+  },
+  "dv_smart": {
+   "topic": "devices",
+   "question_text": "Do you have a smartphone for personal use?",
+   "synonyms": [
+    "smartphone",
+    "mobile phone",
+    "cell phone"
+   ],
+   "description": "Owns a smartphone."
+  }
+ },
+ "harmonized": {
+  "h_province": {
+   "source": "province",
+   "label": "Province (harmonized)",
+   "map": {
+    "10": "NL",
+    "11": "PE",
+    "12": "NS",
+    "13": "NB",
+    "24": "QC",
+    "35": "ON",
+    "46": "MB",
+    "47": "SK",
+    "48": "AB",
+    "59": "BC"
+   },
+   "labels": {
+    "NL": "Newfoundland and Labrador",
+    "PE": "Prince Edward Island",
+    "NS": "Nova Scotia",
+    "NB": "New Brunswick",
+    "QC": "Quebec",
+    "ON": "Ontario",
+    "MB": "Manitoba",
+    "SK": "Saskatchewan",
+    "AB": "Alberta",
+    "BC": "British Columbia"
+   },
+   "synonyms": [
+    "province",
+    "Newfoundland and Labrador",
+    "Prince Edward Island",
+    "Nova Scotia",
+    "New Brunswick",
+    "Quebec",
+    "Ontario",
+    "Manitoba",
+    "Saskatchewan",
+    "Alberta",
+    "British Columbia",
+    "NL",
+    "PE",
+    "NS",
+    "NB",
+    "QC",
+    "ON",
+    "MB",
+    "SK",
+    "AB",
+    "BC"
+   ]
+  },
+  "h_age_band": {
+   "source": "age_grp",
+   "label": "Age band (harmonized)",
+   "map": {
+    "1": "15-24",
+    "2": "25-34",
+    "3": "35-44",
+    "4": "45-54",
+    "5": "55-64",
+    "6": "65+"
+   },
+   "labels": {
+    "15-24": "15 to 24 years",
+    "25-34": "25 to 34 years",
+    "35-44": "35 to 44 years",
+    "45-54": "45 to 54 years",
+    "55-64": "55 to 64 years",
+    "65+": "65 years and over"
+   },
+   "synonyms": [
+    "age",
+    "young adults",
+    "seniors",
+    "millennials",
+    "youth",
+    "older adults"
+   ]
+  },
+  "h_gender": {
+   "source": "gender",
+   "label": "Gender (harmonized)",
+   "map": {
+    "1": "M",
+    "2": "W"
+   },
+   "labels": {
+    "M": "Men+",
+    "W": "Women+"
+   },
+   "synonyms": [
+    "gender",
+    "men",
+    "women"
+   ]
+  },
+  "h_income_quintile": {
+   "source": "hhincq",
+   "label": "Household income quintile (harmonized)",
+   "map": {
+    "1": "Q1",
+    "2": "Q2",
+    "3": "Q3",
+    "4": "Q4",
+    "5": "Q5"
+   },
+   "labels": {
+    "Q1": "Lowest quintile",
+    "Q2": "Second quintile",
+    "Q3": "Third quintile",
+    "Q4": "Fourth quintile",
+    "Q5": "Highest quintile"
+   },
+   "synonyms": [
+    "income",
+    "income quintile",
+    "affluent",
+    "high income",
+    "low income"
+   ]
+  }
+ }
+}

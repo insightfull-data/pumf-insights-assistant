@@ -1,0 +1,12 @@
+{
+  "spec_version": "1.0",
+  "survey": "cius",
+  "release_id": "cius_synth_2022",
+  "base": {"all": [{"var": "h_province", "eq": "ON"}]},
+  "universe": {"var": "ui_010", "eq": 1},
+  "rows": [{"var": "ac_pod"}, {"var": "ac_strm"}],
+  "columns": [{"var": "h_age_band"}],
+  "weight": "wtpp",
+  "measures": ["weighted_count", "col_pct", "index", "unweighted_n", "cv"],
+  "missing": "exclude"
+}

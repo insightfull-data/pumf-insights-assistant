@@ -1,0 +1,22 @@
+{"id": "g01", "question": "What share of Ontarians aged 25 to 44 listen to podcasts?", "expected": {"status": "answered", "rows": ["ac_pod"], "columns": [], "base": {"h_province": ["ON"], "h_age_band": ["25-34", "35-44"]}}}
+{"id": "g02", "question": "How does video streaming vary by household income?", "expected": {"status": "answered", "rows": ["ac_strm"], "columns": ["h_income_quintile"], "base": {}}}
+{"id": "g03", "question": "Podcast listening by age group in Quebec", "expected": {"status": "answered", "rows": ["ac_pod"], "columns": ["h_age_band"], "base": {"h_province": ["QC"]}}}
+{"id": "g04", "question": "How many women in British Columbia shop online?", "expected": {"status": "answered", "rows": ["ac_shop"], "columns": [], "base": {"h_province": ["BC"], "h_gender": ["W"]}}}
+{"id": "g05", "question": "Do seniors aged 65 and over use social media?", "expected": {"status": "answered", "rows": ["sm_use"], "columns": [], "base": {"h_age_band": ["65+"]}}}
+{"id": "g06", "question": "Compare music streaming between men and women", "expected": {"status": "answered", "rows": ["ac_mus"], "columns": ["h_gender"], "base": {}}}
+{"id": "g07", "question": "What percentage of Albertans read news online, by education?", "expected": {"status": "answered", "rows": ["ac_news"], "columns": ["edu"], "base": {"h_province": ["AB"]}}}
+{"id": "g08", "question": "How much do online shoppers spend, by age?", "expected": {"status": "answered", "rows": ["ec_spnd"], "columns": ["h_age_band"], "base": {}}}
+{"id": "g09", "question": "Smartphone ownership among people 65 and over in Atlantic Canada", "expected": {"status": "answered", "rows": ["dv_smart"], "columns": [], "base": {"h_age_band": ["65+"], "h_province": ["NL", "PE", "NS", "NB"]}}}
+{"id": "g10", "question": "How often do people aged 15 to 24 use the Internet?", "expected": {"status": "answered", "rows": ["fq_010"], "columns": [], "base": {"h_age_band": ["15-24"]}}}
+{"id": "g11", "question": "Share of people who used the Internet in the past year, by province", "expected": {"status": "answered", "rows": ["ui_010"], "columns": ["h_province"], "base": {}}}
+{"id": "g12", "question": "Video streaming and podcast listening among Ontarians in the highest income quintile", "expected": {"status": "answered", "rows": ["ac_strm", "ac_pod"], "columns": [], "base": {"h_province": ["ON"], "h_income_quintile": ["Q5"]}}}
+{"id": "g13", "question": "Online shopping by income quintile in Manitoba and Saskatchewan", "expected": {"status": "answered", "rows": ["ac_shop"], "columns": ["h_income_quintile"], "base": {"h_province": ["MB", "SK"]}}}
+{"id": "g14", "question": "Social media use by gender among 25 to 34 year olds", "expected": {"status": "answered", "rows": ["sm_use"], "columns": ["h_gender"], "base": {"h_age_band": ["25-34"]}}}
+{"id": "g15", "question": "Music streaming by province", "expected": {"status": "answered", "rows": ["ac_mus"], "columns": ["h_province"], "base": {}}}
+{"id": "g16", "question": "How many people in Scarborough watch Netflix?", "expected": {"status": "unsupported", "rows": [], "columns": [], "base": {}}}
+{"id": "g17", "question": "How has podcast listening changed since 2018?", "expected": {"status": "unsupported", "rows": [], "columns": [], "base": {}}}
+{"id": "g18", "question": "What is the unemployment rate in Ontario?", "expected": {"status": "unsupported", "rows": [], "columns": [], "base": {}}}
+{"id": "g19", "question": "Online news readers in Nova Scotia by age", "expected": {"status": "answered", "rows": ["ac_news"], "columns": ["h_age_band"], "base": {"h_province": ["NS"]}}}
+{"id": "g20", "question": "How much do people in the lowest income quintile spend online?", "expected": {"status": "answered", "rows": ["ec_spnd"], "columns": [], "base": {"h_income_quintile": ["Q1"]}}}
+{"id": "g21", "question": "Daily Internet use among seniors 65+ by income quintile", "expected": {"status": "answered", "rows": ["fq_010"], "columns": ["h_income_quintile"], "base": {"h_age_band": ["65+"]}}}
+{"id": "g22", "question": "Do university graduates in Ontario stream video more than people with less education?", "expected": {"status": "answered", "rows": ["ac_strm"], "columns": ["edu"], "base": {"h_province": ["ON"]}}}
